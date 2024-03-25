@@ -1,0 +1,1 @@
+# projeto-proposta-rabbitmq
