@@ -1,8 +1,8 @@
-package com.pieropan.propostaapp.mapper;
+package com.martinseverton.propostaapp.mapper;
 
-import com.pieropan.propostaapp.dto.PropostaRequestDTO;
-import com.pieropan.propostaapp.dto.PropostaResponseDTO;
-import com.pieropan.propostaapp.entity.Proposta;
+import com.martinseverton.propostaapp.dto.PropostaRequestDTO;
+import com.martinseverton.propostaapp.dto.PropostaResponseDTO;
+import com.martinseverton.propostaapp.entity.Proposta;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

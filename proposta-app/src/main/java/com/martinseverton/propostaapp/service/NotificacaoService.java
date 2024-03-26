@@ -1,6 +1,6 @@
-package com.pieropan.propostaapp.service;
+package com.martinseverton.propostaapp.service;
 
-import com.pieropan.propostaapp.dto.PropostaResponseDTO;
+import com.martinseverton.propostaapp.dto.PropostaResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.pieropan.propostaapp.entity;
+package com.martinseverton.propostaapp.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

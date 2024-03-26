@@ -1,8 +1,8 @@
-package com.pieropan.propostaapp.controller;
+package com.martinseverton.propostaapp.controller;
 
-import com.pieropan.propostaapp.dto.PropostaRequestDTO;
-import com.pieropan.propostaapp.dto.PropostaResponseDTO;
-import com.pieropan.propostaapp.service.PropostaService;
+import com.martinseverton.propostaapp.dto.PropostaRequestDTO;
+import com.martinseverton.propostaapp.dto.PropostaResponseDTO;
+import com.martinseverton.propostaapp.service.PropostaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

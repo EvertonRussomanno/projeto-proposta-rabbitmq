@@ -1,6 +1,6 @@
-package com.pieropan.propostaapp.repository;
+package com.martinseverton.propostaapp.repository;
 
-import com.pieropan.propostaapp.entity.Proposta;
+import com.martinseverton.propostaapp.entity.Proposta;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

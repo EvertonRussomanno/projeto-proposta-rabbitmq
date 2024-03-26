@@ -1,4 +1,4 @@
-package com.pieropan.propostaapp.config;
+package com.martinseverton.propostaapp.config;
 
 
 import org.springframework.amqp.core.*;

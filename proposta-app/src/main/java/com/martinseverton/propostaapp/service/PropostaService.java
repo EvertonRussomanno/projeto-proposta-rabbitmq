@@ -1,10 +1,10 @@
-package com.pieropan.propostaapp.service;
+package com.martinseverton.propostaapp.service;
 
-import com.pieropan.propostaapp.dto.PropostaRequestDTO;
-import com.pieropan.propostaapp.dto.PropostaResponseDTO;
-import com.pieropan.propostaapp.entity.Proposta;
-import com.pieropan.propostaapp.mapper.PropostaMapper;
-import com.pieropan.propostaapp.repository.PropostaRepository;
+import com.martinseverton.propostaapp.dto.PropostaRequestDTO;
+import com.martinseverton.propostaapp.dto.PropostaResponseDTO;
+import com.martinseverton.propostaapp.entity.Proposta;
+import com.martinseverton.propostaapp.repository.PropostaRepository;
+import com.martinseverton.propostaapp.mapper.PropostaMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
