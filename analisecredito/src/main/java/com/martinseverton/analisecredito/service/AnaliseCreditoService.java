@@ -23,12 +23,12 @@ public class AnaliseCreditoService {
 
     public void analizar(Proposta proposta){
         try {
-            boolean aprovada = calculoPontoList.stream()
-                    .mapToInt(impl -> impl.calcular(proposta)).sum() > 350;
-            proposta.setAprovada(aprovada);
+            int pontos = calculoPontoList.stream()
+                    .mapToInt(impl -> impl.calcular(proposta)).sum();
+            proposta.setAprovada(pontos > 350);
         }catch (StrategyException ex){
             proposta.setAprovada(false);
-            
+            proposta.setObservacao(ex.getMessage());
         }
         notificacaoRabbitMQService.notificar(exchangePropostaConcuida, proposta);
     }

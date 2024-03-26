@@ -1,5 +1,6 @@
 package com.martinseverton.analisecredito.service.strategy.impl;
 
+import com.martinseverton.analisecredito.constante.MensagemConstante;
 import com.martinseverton.analisecredito.domain.Proposta;
 import com.martinseverton.analisecredito.exceptions.StrategyException;
 import com.martinseverton.analisecredito.service.strategy.CalculoPonto;
@@ -16,8 +17,8 @@ public class PontuacaoScoreImpl implements CalculoPonto {
     public int calcular(Proposta proposta) {
         int score = score();
 
-        if (score <= 200){
-            throw new StrategyException("Score baixo!");
+        if (score < 200){
+            throw new StrategyException(String.format(MensagemConstante.SCORE_BAIXO, proposta.getUsuario().getNome()));
         } else if (score <= 400) {
             return 150;
         } else if (score <= 600) {
