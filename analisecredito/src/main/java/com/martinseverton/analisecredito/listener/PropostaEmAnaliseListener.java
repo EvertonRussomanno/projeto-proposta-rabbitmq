@@ -9,6 +9,6 @@ public class PropostaEmAnaliseListener {
 
     @RabbitListener(queues = "${rabbitmq.queue.proposta.pendente}")
     public void propostaEmAnalise(Proposta proposta){
-        
+
     }
 }
