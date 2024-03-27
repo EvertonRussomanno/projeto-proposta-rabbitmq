@@ -18,30 +18,71 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfiguration {
 
+    //Exchanges
     @Value("${rabbitmq.propostapendente.exchange}")
     private String exchangePropostaPendente;
 
     @Value("${rabbitmq.propostaconcluida.exchange}")
     private String exchangePropostaConcluida;
 
+    @Value("${rabbitmq.propostapendente.exchange.dlx}")
+    private String exchangePropostaPendenteDlx;
+
+    @Value("${rabbitmq.propostaconcluida.exchange.dlx}")
+    private String exchangePropostaConcluidaDlx;
+
+    //Filas
+    @Value("${rabbitmq.queue.proposta.pendente.analise-credito}")
+    private String filaPendenteMSAnaliseCredito;
+
+    @Value("${rabbitmq.queue.proposta.pendente.notificacao}")
+    private String filaPendenteMSNotificacao;
+
+    @Value("${rabbitmq.queue.proposta.concluida.proposta-app}")
+    private String filaConcluidaMSProposta;
+
+    @Value("${rabbitmq.queue.proposta.concluida.notificacao}")
+    private String filaConcluidaMSNotificacao;
+
+    //Filas DLQs
+    @Value("${rabbitmq.queue.proposta.pendente.analise-credito.dlq}")
+    private String filaPendenteMSAnaliseCreditoDLQ;
+
+    @Value("${rabbitmq.queue.proposta.pendente.notificacao.dlq}")
+    private String filaPendenteMSNotificacaoDLQ;
+
+    @Value("${rabbitmq.queue.proposta.concluida.proposta.dlq}")
+    private String filaConcluidaMSPropostaDLQ;
+
+    @Value("${rabbitmq.queue.proposta.concluida.notificacao.dlq}")
+    private String filaConcluidaMSNotificacaoDLQ;
+
     @Bean
     public Queue criarFilaPendeteMsAnaliseCredito(){
-        return QueueBuilder.durable("proposta-pendente.ms-analise-credito").build();
+        return QueueBuilder.durable(filaPendenteMSAnaliseCredito)
+                .deadLetterExchange(exchangePropostaPendenteDlx)
+                .build();
     }
 
     @Bean
     public Queue criarFilaPendeteMsNotificacao(){
-        return QueueBuilder.durable("proposta-pendente.ms-notificacao").build();
+        return QueueBuilder.durable(filaPendenteMSNotificacao)
+                .deadLetterExchange(exchangePropostaPendenteDlx)
+                .build();
     }
 
     @Bean
     public Queue criarFilaConcluidaMsProposta(){
-        return QueueBuilder.durable("proposta-concluida.ms-proposta").build();
+        return QueueBuilder.durable(filaConcluidaMSProposta)
+                .deadLetterExchange(exchangePropostaConcluidaDlx)
+                .build();
     }
 
     @Bean
     public Queue criarFilaConcluidaMsNotificacao(){
-        return QueueBuilder.durable("proposta-concluida.ms-notificacao").build();
+        return QueueBuilder.durable(filaConcluidaMSNotificacao)
+                .deadLetterExchange(exchangePropostaConcluidaDlx)
+                .build();
     }
 
     @Bean
@@ -86,6 +127,56 @@ public class RabbitMQConfiguration {
     public Binding criarBindingPropostaConcluidaMSNotificacao(){
         return BindingBuilder.bind(criarFilaConcluidaMsNotificacao())
                 .to(criarFanoutExchangePropostaConcluida());
+    }
+
+    @Bean
+    public Queue criarFilaPropostaPendenteMSAnaliseCreditoDLQ(){
+        return QueueBuilder.durable(filaPendenteMSAnaliseCreditoDLQ).build();
+    }
+
+    @Bean
+    public Queue criarFilaPropostaPendenteMSNotificacaoDLQ(){
+        return QueueBuilder.durable(filaPendenteMSNotificacaoDLQ).build();
+    }
+
+    @Bean
+    public FanoutExchange deadLetterExchangePropostaPendente(){
+        return ExchangeBuilder.fanoutExchange(exchangePropostaPendenteDlx).build();
+    }
+
+    @Bean
+    public Queue criarFilaPropostaConcluidaMSPropostaDLQ(){
+        return QueueBuilder.durable(filaConcluidaMSPropostaDLQ).build();
+    }
+
+    @Bean
+    public Queue criarFilaPropostaConcluidaMSNotificacaoDLQ(){
+        return QueueBuilder.durable(filaConcluidaMSNotificacaoDLQ).build();
+    }
+
+    @Bean
+    public FanoutExchange deadLetterExchangePropostaConcluida(){
+        return ExchangeBuilder.fanoutExchange(exchangePropostaConcluidaDlx).build();
+    }
+
+    @Bean
+    public Binding criarBindingPropostaPendenteMSAnaliseCreditoDLQ(){
+        return BindingBuilder.bind(criarFilaPropostaPendenteMSAnaliseCreditoDLQ()).to(deadLetterExchangePropostaPendente());
+    }
+
+    @Bean
+    public Binding criarBindingPropostaPendenteMSNotificacaoDLQ(){
+        return BindingBuilder.bind(criarFilaPropostaPendenteMSNotificacaoDLQ()).to(deadLetterExchangePropostaPendente());
+    }
+
+    @Bean
+    public Binding criarBindingPropostaConcluidaMSPropostaDLQ(){
+        return BindingBuilder.bind(criarFilaPropostaConcluidaMSPropostaDLQ()).to(deadLetterExchangePropostaConcluida());
+    }
+
+    @Bean
+    public Binding criarBindingPropostaConcluidaMSNotificacaoDLQ(){
+        return BindingBuilder.bind(criarFilaPropostaConcluidaMSNotificacaoDLQ()).to(deadLetterExchangePropostaConcluida());
     }
 
     @Bean

@@ -16,6 +16,6 @@ public class PropostaEmAnaliseListener {
 
     @RabbitListener(queues = "${rabbitmq.queue.proposta.pendente}")
     public void propostaEmAnalise(Proposta proposta){
-        analiseCreditoService.analizar(proposta);
+        analiseCreditoService.analisar(proposta);
     }
 }

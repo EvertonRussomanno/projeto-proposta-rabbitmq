@@ -21,7 +21,9 @@ public class AnaliseCreditoService {
     @Value("${rabbitmq.propostaconcluida.exchange}")
     private String exchangePropostaConcuida;
 
-    public void analizar(Proposta proposta){
+    public void analisar(Proposta proposta){
+        // forçar erro para teste dlq
+        //proposta.getObservacao().toLowerCase();
         try {
             int pontos = calculoPontoList.stream()
                     .mapToInt(impl -> impl.calcular(proposta)).sum();

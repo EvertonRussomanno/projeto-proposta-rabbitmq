@@ -1,26 +1,31 @@
 package com.martinseverton.propostaapp.listener;
 
-import com.martinseverton.propostaapp.dto.PropostaResponseDTO;
 import com.martinseverton.propostaapp.entity.Proposta;
 import com.martinseverton.propostaapp.mapper.PropostaMapper;
 import com.martinseverton.propostaapp.repository.PropostaRepository;
 import com.martinseverton.propostaapp.service.WebSocketService;
-import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
 @Component
 public class PropostaConcluidaListener {
 
-    private PropostaRepository propostaRepository;
+    private final PropostaRepository propostaRepository;
 
-    private WebSocketService webSocketService;
+    private final WebSocketService webSocketService;
 
-    @RabbitListener(queues = "${rabbitmq.queue.proposta.concluida}")
+    public PropostaConcluidaListener(PropostaRepository propostaRepository, WebSocketService webSocketService) {
+        this.propostaRepository = propostaRepository;
+        this.webSocketService = webSocketService;
+    }
+
+    @RabbitListener(queues = "${rabbitmq.queue.proposta.concluida.proposta-app}")
     public void propostaConcluida(Proposta proposta){
-        propostaRepository.save(proposta);
-        PropostaResponseDTO propostaResponseDTO = PropostaMapper.INSTANCE.convertEntityToDto(proposta);
-        webSocketService.notificar(propostaResponseDTO);
+        atualizarProposta(proposta);
+        webSocketService.notificar(PropostaMapper.INSTANCE.convertEntityToDto(proposta));
+    }
+
+    private void atualizarProposta(Proposta proposta) {
+        propostaRepository.atualizarProposta(proposta.getId(), proposta.getAprovada(), proposta.getObservacao());
     }
 }
